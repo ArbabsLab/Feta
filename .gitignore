@@ -39,3 +39,6 @@ jspm_packages/
 # OS Specific Files
 .DS_Store
 Thumbs.db
+
+# Firebase credentials
+firebase/
