@@ -120,6 +120,25 @@ nav ul li a:hover{
     flex-direction: column;
     gap: 20px;
 }
+.container .menu .menu_column .menu_item_header{
+    display: flex;
+    justify-content: space-between;
+}
+.container .menu .menu_column .menu_item_header .btn_add_cart{
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+   background: wheat;
+    color: olive;
+    border: 0;
+    outline: none;
+    margin-right: 30px;
+}
+
+.container .menu .menu_column .menu_item_header .btn_add_cart:active{
+    color: wheat;
+    background-color: olive;
+}
 .container .menu .menu_column h1{
     font-size: 1.5em;
 }
