@@ -15,10 +15,57 @@ p{
     font-size: 1.1em;
 }
 
+.photo_gallery{
+    width: 100%;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gallery{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.panel{
+    width: 150px;
+    height: 400px;
+    margin: 10px;
+    border-radius: 50px;
+    background-image: url(home_pictures/pic_salad.jpg);
+    background-size: cover;
+    background-position: center;
+    transition: all 0.3s ease-in;
+}
+.panel:nth-child(2){
+    background-image: url(home_pictures/pic_gyro.jpg);
+    background-size: cover;
+    background-position: center;
+}
+.panel:nth-child(3){
+    background-image: url(home_pictures/pic_baklava.jpg);
+    background-size: cover;
+    background-position: center;
+}
+.panel:nth-child(4){
+    background-image: url(home_pictures/pic_spanakopita.jpg);
+    background-size: cover;
+    background-position: center;
+}
+.panel:nth-child(5){
+    background-image: url(home_pictures/pic_tzatziki.jpg);
+    background-size: cover;
+    background-position: center;
+}
+.panel:hover{
+    width: 450px;
+}
 .container{
     width: 100%;
     min-height: 100vh;
-    background-image: linear-gradient(#f5deb3, #80800033);
+    background-image: rgba(245, 222, 178, 0.2);
 }
 
 .container .line_divide{
@@ -28,7 +75,10 @@ p{
     opacity: 0.2;
     margin: 10px 0px 10px
 }
-
+.menu_title{
+    margin-top: 10px;
+    text-align: center;
+}
 .logo {
     width: 80px;
     border-radius: 40px;
@@ -141,6 +191,7 @@ nav ul li a:hover{
 }
 .container .menu .menu_column h1{
     font-size: 1.5em;
+    text-align: center;
 }
 .container .menu .menu_column h2{
     font-size: 1em;
