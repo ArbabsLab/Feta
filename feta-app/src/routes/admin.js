@@ -213,6 +213,50 @@ router.get("/orders", verifyAdmin, async (req, res) => {
   }
 });
 
+// Assign delivery driver to pending order and move it to outstanding deliveries (admin)
+router.post("/orders/assign", verifyAdmin, async (req, res) => {
+  const { orderId, driverId } = req.body;
+  if (!orderId || !driverId) {
+    return res.status(400).json({
+      success: false,
+      message: "Invalid request - Missing required fields",
+    });
+  }
+
+  try {
+    const pendingOrderRef = db.collection("pending-orders").doc(orderId);
+    const pendingOrder = await pendingOrderRef.get();
+
+    if (!pendingOrder.exists) {
+      return res.status(404).json({
+        success: false,
+        message: `No pending order found with ID: ${id}`,
+      });
+    }
+
+    const orderData = pendingOrder.data();
+    const newOrderData = {
+      ...orderData,
+      driverId,
+    };
+
+    await db.collection("outstanding-deliveries").add(newOrderData);
+    await pendingOrderRef.delete();
+
+    return res.status(200).json({
+      success: true,
+      message: "Driver assigned to order successfully",
+    });
+  } catch (error) {
+    console.error("Error assigning driver to order:", error.message);
+    res.status(500).json({
+      success: false,
+      message: "Error assigning driver to order",
+      error: error.message,
+    });
+  }
+});
+
 // Add chef (admin)
 router.post("/chef/add", verifyAdmin, async (req, res) => {
   const { email } = req.body;
