@@ -119,7 +119,6 @@ router.post("/orders", verifyMember, async (req, res) => {
       },
       items: items,
       createdAt: new Date().toISOString(),
-      driverId: null,
     };
 
     const docRef = await db.collection("pending-orders").add(newOrder);
