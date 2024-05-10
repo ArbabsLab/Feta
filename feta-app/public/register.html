@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="styles.css" rel="stylesheet" />
+        <link
+            href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+            rel="stylesheet"
+        />
+        <title>Sign Up</title>
+    </head>
+    <body>
+        <div class="logo">
+            <a href="#">
+                <img src="media/feta_logo.png" />
+            </a>
+        </div>
+
+        <div class="container">
+            <h1>Sign up</h1>
+
+            <div class="line_divide"></div>
+
+            <form id="registrationForm">
+                <div class="name">
+                    <label for="firstName">First Name:</label>
+                    <div class="input">
+                        <input
+                            type="text"
+                            name="firstName"
+                            placeholder="Enter first name"
+                        />
+                        <i class="bx bxs-user"></i>
+                    </div>
+
+                    <label for="lastName">Last Name:</label>
+                    <div class="input">
+                        <input
+                            type="text"
+                            name="lastName"
+                            placeholder="Enter last name"
+                        />
+                        <i class="bx bxs-user"></i>
+                    </div>
+                </div>
+
+                <label for="email">Email:</label>
+                <div class="input">
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Enter email"
+                    />
+                    <i class="bx bx-at"></i>
+                </div>
+
+                <label for="password">Password:</label>
+                <div class="input">
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Enter password"
+                    />
+                    <i class="bx bxs-lock-alt"></i>
+                </div>
+                <div class="line_divide"></div>
+
+                <button class="register">Sign up</button>
+            </form>
+        </div>
+
+        <script>
+            const form = document.getElementById("registrationForm");
+            form.addEventListener("submit", async (e) => {
+                e.preventDefault();
+
+                const data = {
+                    firstName: form.firstName.value,
+                    lastName: form.lastName.value,
+                    email: form.email.value,
+                    password: form.password.value,
+                };
+
+                try {
+                    const response = await fetch("/api/member/register", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(data),
+                    });
+
+                    const result = await response.json();
+                    if (result.success) {
+                        alert("User successfully registered");
+                        form.reset();
+                        window.location.href = "/login";
+                    } else {
+                        alert("Error registering user: " + result.error);
+                    }
+                } catch (error) {
+                    console.error("Error:", error);
+                }
+            });
+        </script>
+    </body>
+</html>
