@@ -37,7 +37,7 @@ p{
     background-image: url(home_pictures/pic_salad.jpg);
     background-size: cover;
     background-position: center;
-    transition: all 0.3s ease-in;
+    transition: all 0.3s ease-in-out;
 }
 .panel:nth-child(2){
     background-image: url(home_pictures/pic_gyro.jpg);
