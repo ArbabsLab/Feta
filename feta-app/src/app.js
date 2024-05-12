@@ -21,6 +21,10 @@ app.get("/register", (_req, res) => {
   res.sendFile(path.join(__dirname, "..", "public", "register.html"));
 });
 
+app.get("/login", (_req, res) => {
+  res.sendFile(path.join(__dirname, "..", "public", "login.html"));
+});
+
 const adminRoutes = require("./routes/admin");
 const chefRoutes = require("./routes/chef");
 const driverRoutes = require("./routes/driver");
