@@ -1,0 +1,96 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto:wght@100;300;400;500;700&display=swap");
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+}
+
+body {
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    padding: 10px;
+}
+.logo img {
+    width: 200px;
+    border-radius: 100px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    border-radius: 10px;
+    box-shadow: 0px 7px 29px 0px rgba(48, 48, 0, 0.2);
+    padding: 10px;
+}
+
+.container h1 {
+    color: olive;
+    font-size: 1.6em;
+}
+
+.container .line_divide {
+    height: 1px;
+    width: 100%;
+    background: black;
+    opacity: 0.2;
+    margin: 10px 0px 10px;
+}
+
+.container form label {
+    color: olive;
+    font-size: 14px;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.container form .input {
+    position: relative;
+}
+
+.container form .input input {
+    color: olive;
+    font-size: 16px;
+    width: 90%;
+    height: 30px;
+    border: 1px solid wheat;
+    border-radius: 7px;
+    background: transparent;
+    text-indent: 10px;
+    transition: all 0.3s ease-in-out;
+    outline: none;
+    margin-bottom: 10px;
+}
+
+.container form .input input:focus {
+    border-color: olive;
+}
+
+.container form i {
+    color: olive;
+}
+
+.container form .register {
+    width: 100%;
+    margin-top: 10px;
+    background: olive;
+    color: wheat;
+    border: none;
+    border-radius: 7px;
+    line-height: 30px;
+    font-size: 16px;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+.container form .register:hover {
+    background: wheat;
+    color: olive;
+}
