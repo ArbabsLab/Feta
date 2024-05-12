@@ -62,7 +62,8 @@ nav ul li a:hover {
     text-decoration: underline;
 }
 
-.btn_logout {
+.container .btngoback {
+    text-decoration: none;
     width: auto;
     display: flex;
     align-items: center;
@@ -70,42 +71,60 @@ nav ul li a:hover {
     outline: none;
     border-radius: 50px;
     padding: 10px 20px;
-    background: #ff6347; /* Red color for logout button */
+    background: wheat; /* Red color for logout button */
     font-size: 1em;
     margin-right: 10px;
-    color: #fff; /* White color for text */
+    color: olive; /* White color for text */
     border: none;
     cursor: pointer;
 }
 
-.container .admin_content {
+.container .cart_content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 50px;
+    margin-top: 50px auto;
 }
 
-.container .admin_content h1 {
+.container .cart_content h1 {
     font-size: 2em;
     margin-bottom: 20px;
 }
 
-.container .admin_options {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.cart_content table{
+    width: 100%;
+    
 }
 
-.container .admin_options h2 {
+th{
+    text-align: left;
+    padding: 5px;
     color: olive;
-    text-decoration: none;
-    font-size: 1.2em;
-    transition: all 0.3s ease-in;
+    background: wheat;
 }
 
-.container .admin_options h2:hover {
-    color: rgb(174, 174, 0);
+td{
+    padding: 10px 5px;
 }
+
+td input{
+    width: 40px;
+    height: 30px;
+    padding: 5px;
+}
+
+.total_price{
+    width: 100%;
+    display: flex;
+    justify-content:right;
+}
+
+.total_price table{
+    border-top: 3px solid olive;
+    width: 100%;
+    max-width: 350px;
+}
+
 
 footer {
     height: 10vh;
