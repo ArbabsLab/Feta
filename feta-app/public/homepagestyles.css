@@ -22,6 +22,10 @@ p {
     color: olive;
 }
 
+.home_highlight p {
+    color: wheat;
+}
+
 .home_highlight h3 {
     color: wheat;
 }
