@@ -44,6 +44,10 @@ app.get("/cart", (_req, res) => {
   res.sendFile(path.join(__dirname, "..", "public/pages", "cart.html"));
 });
 
+app.get("/checkout", verifyMember, (_req, res) => {
+  res.sendFile(path.join(__dirname, "..", "secure", "checkout.html"));
+});
+
 app.get("/admin", verifyAdmin, (_req, res) => {
   res.sendFile(path.join(__dirname, "..", "secure", "admin.html"));
 });

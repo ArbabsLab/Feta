@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="/css/checkout.css" rel="stylesheet">
+    <title>Checkout</title>
+</head>
+
+<body>
+    <div class="container">
+        <nav>
+            <img class="logo" src="/media/feta_logo.png" alt="Logo">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/menu">Menu</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+            <a class="btngoback" href="/cart"><i class='bx bx-arrow-back'></i></a>
+        </nav>
+
+        <div class="line_divide"></div>
+
+        <div class="checkout_content">
+            <div class="form_section">
+                <form id="checkout-form">
+                    <h2>Delivery Information</h2>
+                    <div id="user-details">
+                        <p><strong>Name:</strong> <span id="user-name"></span></p>
+                        <p><strong>Email:</strong> <span id="user-email"></span></p>
+                    </div>
+                    <input type="text" placeholder="Phone Number" name="phone" required>
+                    <input type="text" placeholder="Address Line 1" name="address1" required>
+                    <input type="text" placeholder="Address Line 2" name="address2">
+                    <input type="text" placeholder="City" name="city" required>
+                    <input type="text" placeholder="State" name="state" required>
+                    <input type="text" placeholder="Zipcode" name="zipcode" required>
+                    <textarea placeholder="Delivery Instructions" name="instructions"></textarea>
+                    <button class="placeorder" type="submit">Place Order</button>
+                </form>
+            </div>
+            <div class="cart_summary">
+                <h2>Your Cart</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Dish</th>
+                            <th>Quantity</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody id="summary-body">
+                        <!-- Cart inserted here -->
+                    </tbody>
+                </table>
+                <div class="total_price">
+                    <table>
+                        <tr>
+                            <td>Subtotal</td>
+                            <td id="summary-subtotal">$0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Tax</td>
+                            <td id="summary-tax">$0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Total</td>
+                            <td id="summary-total">$0.00</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <!-- Footer content here -->
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let userDetails = null;
+            fetch(`/api/member/profile`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        userDetails = data.data;
+                        document.getElementById('user-name').textContent = userDetails.displayName || 'Not provided';
+                        document.getElementById('user-email').textContent = userDetails.email || 'Not provided';
+                    } else {
+                        console.error('Failed to fetch user profile:', data.message);
+                    }
+                })
+                .catch(error => console.error('Error fetching user profile:', error));
+
+            const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+            const itemCounts = cartItems.reduce((acc, id) => {
+                acc[id] = (acc[id] || 0) + 1;
+                return acc;
+            }, {});
+
+            fetch('/api/menu')
+                .then(response => response.json())
+                .then(menuItems => {
+                    let subtotal = 0;
+                    const tbody = document.getElementById('summary-body');
+                    menuItems.data.forEach(item => {
+                        if (itemCounts[item.id]) {
+                            const quantity = itemCounts[item.id];
+                            const itemSubtotal = item.price * quantity;
+                            subtotal += itemSubtotal;
+
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                        <td>${item.name}</td>
+                        <td>${quantity}</td>
+                        <td>$${itemSubtotal.toFixed(2)}</td>
+                    `;
+                            tbody.appendChild(row);
+                        }
+                    });
+
+                    const tax = subtotal * 0.08875;
+                    const total = subtotal + tax;
+                    document.getElementById('summary-subtotal').textContent = `$${subtotal.toFixed(2)}`;
+                    document.getElementById('summary-tax').textContent = `$${tax.toFixed(2)}`;
+                    document.getElementById('summary-total').textContent = `$${total.toFixed(2)}`;
+                });
+
+            const form = document.getElementById('checkout-form');
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                const orderData = {
+                    items: itemCounts,
+                    user: {
+                        name: userDetails.displayName,
+                        email: userDetails.email,
+                        phone: form.phone.value,
+                        address1: form.address1.value,
+                        address2: form.address2.value,
+                        city: form.city.value,
+                        state: form.state.value,
+                        zipcode: form.zipcode.value,
+                        deliveryInstructions: form.instructions.value,
+                    }
+                };
+
+                fetch('/api/member/orders', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(orderData)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success && data.data.id) {
+                            localStorage.removeItem('cart');
+                            alert(`Order placed successfully! Your order ID is ${data.data.id}.`);
+                            window.location.href = "/";
+                        } else {
+                            alert("There was an issue placing your order. Please try again.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error placing order:', error);
+                        alert('There was a problem with your order.');
+                    });
+            });
+        });
+    </script>
+</body>
+
+</html>
