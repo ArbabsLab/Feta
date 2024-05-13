@@ -22,10 +22,14 @@ async function verifyRole(req, res, next, expectedRole) {
     next();
   } catch (error) {
     console.error(`Error verifying ${expectedRole} privileges:`, error.message);
-    return res.status(401).json({
-      success: false,
-      message: "Unauthorized access - Invalid token",
-    });
+    if (error.message.toLowerCase().includes('expired')) {
+      res.redirect(301, '/login');
+    } else {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized access - Invalid token",
+      });
+    }
   }
 }
 
