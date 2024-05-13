@@ -18,7 +18,6 @@ async function verifyRole(req, res, next, expectedRole) {
         message: `Forbidden - You don't have permission to access this resource`,
       });
     }
-
     req.user = decodedToken;
     next();
   } catch (error) {

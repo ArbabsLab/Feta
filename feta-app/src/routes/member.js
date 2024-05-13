@@ -33,33 +33,44 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// Get menu items (all members)
-router.get("/menu", async (_req, res) => {
+// Get user info (member)
+router.get("/profile", verifyMember, async (req, res) => {
   try {
-    const snapshot = await db.collection("menu-items").get();
-    const items = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-    res.status(200).json({
+    const uid = req.user.uid;
+    const userRecord = await firebase.auth().getUser(uid);
+    res.json({
       success: true,
-      data: items,
+      data: {
+        displayName: userRecord.displayName,
+        email: userRecord.email
+      }
     });
   } catch (error) {
-    console.error("Error getting menu items:", error.message);
-    res.status(500).json({
-      success: false,
-      message: "Error getting menu items",
-      error: error.message,
-    });
+    console.error('Error fetching user data:', error);
+    res.status(500).json({ success: false, message: 'Failed to fetch user data' });
   }
 });
+
 
 // Place order (member)
 router.post("/orders", verifyMember, async (req, res) => {
   const { items, user } = req.body;
 
-  if (!Array.isArray(items) || items.length === 0) {
+  if (!items || typeof items !== 'object' || Object.keys(items).length === 0) {
     return res.status(400).json({
       success: false,
-      message: "Invalid request - 'items' should be a non-empty array",
+      message: "Invalid request - 'items' should be a non-empty object",
+    });
+  }
+
+  const invalidItem = Object.entries(items).some(([id, quantity]) =>
+    !id || typeof quantity !== "number"
+  );
+
+  if (invalidItem) {
+    return res.status(400).json({
+      success: false,
+      message: "Invalid request - Each item should have an 'id' and 'quantity' (number)",
     });
   }
 
@@ -67,17 +78,6 @@ router.post("/orders", verifyMember, async (req, res) => {
     return res.status(400).json({
       success: false,
       message: "Invalid request - Missing required user information",
-    });
-  }
-
-  const invalidItem = items.some(
-    (item) => !item.id || typeof item.quantity !== "number",
-  );
-  if (invalidItem) {
-    return res.status(400).json({
-      success: false,
-      message:
-        "Invalid request - Each item should have an 'id' and 'quantity' (number)",
     });
   }
 
