@@ -34,32 +34,32 @@ p {
     height: 400px;
     margin: 10px;
     border-radius: 50px;
-    background-image: url(media/pic_salad.jpg);
+    background-image: url(/media/pic_salad.jpg);
     background-size: cover;
     background-position: center;
     transition: all 0.3s ease-in-out;
 }
 
 .panel:nth-child(2) {
-    background-image: url(media/pic_gyro.jpg);
+    background-image: url(/media/pic_gyro.jpg);
     background-size: cover;
     background-position: center;
 }
 
 .panel:nth-child(3) {
-    background-image: url(media/pic_baklava.jpg);
+    background-image: url(/media/pic_baklava.jpg);
     background-size: cover;
     background-position: center;
 }
 
 .panel:nth-child(4) {
-    background-image: url(media/pic_spanakopita.jpg);
+    background-image: url(/media/pic_spanakopita.jpg);
     background-size: cover;
     background-position: center;
 }
 
 .panel:nth-child(5) {
-    background-image: url(media/pic_tzatziki.jpg);
+    background-image: url(/media/pic_tzatziki.jpg);
     background-size: cover;
     background-position: center;
 }
