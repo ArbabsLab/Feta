@@ -7,9 +7,9 @@ const router = express.Router();
 
 // Add menu item (admin)
 router.post("/menu", verifyAdmin, async (req, res) => {
-  const { name, description, imageUrl, price } = req.body;
+  const { name, description, type, price } = req.body;
 
-  if (!name || !description || !imageUrl || price === undefined || price < 0) {
+  if (!name || !description || !type || price === undefined || price < 0) {
     return res.status(400).json({
       success: false,
       message: "Invalid request - Missing required fields or incorrect data",
@@ -20,7 +20,7 @@ router.post("/menu", verifyAdmin, async (req, res) => {
     const newItem = {
       name,
       description,
-      "image-url": imageUrl,
+      type,
       price: Number(price),
     };
 
@@ -43,7 +43,7 @@ router.post("/menu", verifyAdmin, async (req, res) => {
 
 // Update menu item (admin)
 router.patch("/menu", verifyAdmin, async (req, res) => {
-  const { id, name, description, imageUrl, price } = req.body;
+  const { id, name, description, type, price } = req.body;
 
   if (!id) {
     return res.status(400).json({
@@ -55,7 +55,7 @@ router.patch("/menu", verifyAdmin, async (req, res) => {
   const updateFields = {};
   if (name) updateFields.name = name;
   if (description) updateFields.description = description;
-  if (imageUrl) updateFields.imageUrl = imageUrl;
+  if (type) updateFields.type = type;
   if (price !== undefined && price >= 0) updateFields.price = Number(price);
 
   if (Object.keys(updateFields).length === 0) {

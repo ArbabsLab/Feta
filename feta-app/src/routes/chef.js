@@ -7,7 +7,7 @@ const router = express.Router();
 
 // Update menu item (chef) (price cannot be updated)
 router.patch("/menu", verifyChef, async (req, res) => {
-  const { id, name, description, imageUrl } = req.body;
+  const { id, name, description, type } = req.body;
 
   if (!id) {
     return res.status(400).json({
@@ -19,7 +19,7 @@ router.patch("/menu", verifyChef, async (req, res) => {
   const updateFields = {};
   if (name) updateFields.name = name;
   if (description) updateFields.description = description;
-  if (imageUrl) updateFields.imageUrl = imageUrl;
+  if (type) updateFields.type = type;
 
   if (Object.keys(updateFields).length === 0) {
     return res.status(400).json({
@@ -61,9 +61,9 @@ router.patch("/menu", verifyChef, async (req, res) => {
 
 // Submit new menu item for review (chef)
 router.post("/menu/submissions", verifyChef, async (req, res) => {
-  const { name, description, imageUrl } = req.body;
+  const { name, description, type } = req.body;
 
-  if (!name || !description || !imageUrl) {
+  if (!name || !description || !type) {
     return res.status(400).json({
       success: false,
       message: "Invalid request - Missing required fields",
@@ -74,7 +74,7 @@ router.post("/menu/submissions", verifyChef, async (req, res) => {
     const newItem = {
       name,
       description,
-      "image-url": imageUrl,
+      type,
     };
 
     const docRef = await db.collection("pending-menu-submissions").add(newItem);
