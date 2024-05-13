@@ -1,17 +1,17 @@
 const firebase = require("firebase-admin");
 
 async function verifyRole(req, res, next, expectedRole) {
-  const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+  const token = req.cookies.jwt;
+
+  if (!token) {
     return res.status(401).json({
       success: false,
       message: "Unauthorized access - No token provided",
     });
   }
 
-  const idToken = authHeader.split(" ")[1];
   try {
-    const decodedToken = await firebase.auth().verifyIdToken(idToken);
+    const decodedToken = await firebase.auth().verifyIdToken(token);
     if (decodedToken.role !== expectedRole) {
       return res.status(403).json({
         success: false,
