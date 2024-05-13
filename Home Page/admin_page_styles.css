@@ -1,0 +1,175 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+}
+p{
+    font-weight: 300;
+    font-size: 1.1em;
+}
+.home_highlight{
+    width: 100%;
+    height: 60vh;
+    background-color: lineargradient(black);
+    background-image: url(home_pictures/home_highlight_pic.jpeg);
+    background-size: cover;
+    background-position: center;
+    padding: 50px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    color: olive;
+    
+}
+
+.home_highlight h3{
+    color: wheat;
+}
+.container{
+    width: 100%;
+    min-height: 100vh;
+    background-image: rgba(245, 222, 178, 0.2);
+}
+
+.container .line_divide{
+    height: 1px;
+    width: 100%;
+    background: black;
+    opacity: 0.2;
+    margin: 10px 0px 10px;
+}
+
+.logo {
+    width: 80px;
+    border-radius: 40px;
+    margin: 10px;
+    margin-left: 20px;
+}
+
+nav{
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    background-color: #80800051;
+}
+
+nav ul{
+    list-style: none;
+    width: 100%;
+    text-align: right;
+    padding-right: 10px;
+}
+
+nav ul li{
+    display: inline;
+    margin: 10px 20px;
+}
+
+nav ul li a{
+    color: olive;
+    text-decoration: none;
+    transition: all 0.3s ease-in;
+    text-underline-offset: 6px;
+    cursor: pointer;
+}
+
+nav ul li a:hover{
+    cursor: pointer;
+    color: rgb(174, 174, 0);
+    text-decoration: underline;
+    
+}
+
+.btn_cart{
+    text-decoration: none;
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    border-radius: 50px;
+    padding: 10px;
+    background: wheat;
+    font-size: 1.5em;
+    margin-right: 10px;
+    color: olive;
+}
+
+.container .content{
+    display: flex;
+    width: 100%;
+    margin-top: 30px;
+    justify-content: center;
+    gap: 10px;
+}
+
+.container .content .description{
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-weight: 300;
+    border: 2px olive dashed;
+    border-radius: 10px;
+    padding: 5px;
+    color: olive
+}
+
+.container .pic_greek_salad{
+    width: 500px;
+    border-radius: 10px;
+}
+
+h1{
+    font-weight: 500;
+    font-size: 2em;
+}
+h3{
+    font-weight: 700;
+    font-size: 3.5em;
+}
+
+.container .admin_content{
+    width: 100%;
+    height: 75vh;
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+}
+
+.container .highlight_pic{
+    color: olive;
+}
+
+.admin_column {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.admin_column ul{
+    list-style: none;
+    margin: 0px;
+    padding: 0;
+}
+
+.admin_column ul li{
+    display: flex;
+    background: wheat;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+.admin_column ul li button{
+    padding: 5px 10px;
+}
+
+footer{
+    height: 10vh;
+    background:#80800051;
+}
