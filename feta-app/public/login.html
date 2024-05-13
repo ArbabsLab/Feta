@@ -84,25 +84,20 @@
                             const user = userCredential.user;
                             user.getIdToken()
                                 .then((idToken) => {
-                                    console.log(
-                                        `Auth token for ${email}: ${idToken}`,
-                                    );
                                     setCookie("jwt", idToken, 1);
+                                    window.location.href = "/";
                                 })
 
                                 .catch((error) => {
-                                    console.error(
-                                        `Error getting auth token: ${error.message}`,
-                                    );
+                                    alert("Error signing in: " + error);
                                 });
                         })
                         .catch((error) => {
-                            const errorCode = error.code;
                             const errorMessage = error.message;
-                            console.error(`${errorMessage}: ${errorCode}`);
+                            alert("Error signing in: " + errorMessage);
                         });
                 } catch (error) {
-                    console.error(`Error logging in: ${error.message}`);
+                    alert("Error signing in: " + error.message);
                 }
 
                 function setCookie(cname, cvalue, exdays) {
