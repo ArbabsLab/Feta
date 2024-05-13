@@ -1,7 +1,9 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cookieParser = require('cookie-parser');
 const firebase = require("firebase-admin");
 const path = require("path");
+const { verifyMember, verifyAdmin } = require("./middlewares/auth");
 require("dotenv").config();
 
 const serviceAccountPath = path.resolve(
@@ -15,26 +17,35 @@ firebase.initializeApp({
 
 const app = express();
 app.use(bodyParser.json());
+app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "..", "public")));
 
 app.get("/register", (_req, res) => {
-  res.sendFile(path.join(__dirname, "..", "public", "register.html"));
+  res.sendFile(path.join(__dirname, "..", "public/pages", "register.html"));
 });
 
 app.get("/login", (_req, res) => {
-  res.sendFile(path.join(__dirname, "..", "public", "login.html"));
+  res.sendFile(path.join(__dirname, "..", "public/pages", "login.html"));
 });
 
 app.get("/", (_req, res) => {
-  res.sendFile(path.join(__dirname, "..", "public", "index.html"));
+  res.sendFile(path.join(__dirname, "..", "public/pages", "index.html"));
 });
 
 app.get("/contact", (_req, res) => {
-  res.sendFile(path.join(__dirname, "..", "public", "contact.html"));
+  res.sendFile(path.join(__dirname, "..", "public/pages", "contact.html"));
 });
 
 app.get("/menu", (_req, res) => {
-  res.sendFile(path.join(__dirname, "..", "public", "menu.html"));
+  res.sendFile(path.join(__dirname, "..", "public/pages", "menu.html"));
+});
+
+app.get("/cart", (_req, res) => {
+  res.sendFile(path.join(__dirname, "..", "public/pages", "cart.html"));
+});
+
+app.get("/admin", verifyAdmin, (_req, res) => {
+  res.sendFile(path.join(__dirname, "..", "secure", "admin.html"));
 });
 
 const adminRoutes = require("./routes/admin");
