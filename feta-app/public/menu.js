@@ -38,6 +38,25 @@ function fetchMenuItems() {
                         break;
                 }
             });
+            addEventListeners();
         })
         .catch(error => console.error('Error fetching menu items:', error));
+}
+
+function addEventListeners() {
+    const buttons = document.querySelectorAll('.btn_add_cart');
+    buttons.forEach(button => {
+        button.addEventListener('click', function (event) {
+            const menuItemDiv = this.closest('.menu_item');
+            const itemId = menuItemDiv.id;
+            addToCart(itemId);
+        });
+    });
+}
+
+function addToCart(itemId) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.push(itemId);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    alert(`Item added to cart!`);
 }
