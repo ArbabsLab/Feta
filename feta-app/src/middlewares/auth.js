@@ -22,7 +22,7 @@ async function verifyRole(req, res, next, expectedRole) {
     next();
   } catch (error) {
     console.error(`Error verifying ${expectedRole} privileges:`, error.message);
-    if (error.message.toLowerCase().includes('expired')) {
+    if (error.message.toLowerCase().includes('id-token-expired')) {
       res.redirect(301, '/login');
     } else {
       return res.status(401).json({
