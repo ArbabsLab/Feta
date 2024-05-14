@@ -1,6 +1,5 @@
 const express = require("express");
-const bodyParser = require("body-parser");
-const cookieParser = require('cookie-parser');
+const cookieParser = require("cookie-parser");
 const firebase = require("firebase-admin");
 const path = require("path");
 const { verifyMember, verifyAdmin } = require("./middlewares/auth");
@@ -16,41 +15,21 @@ firebase.initializeApp({
 });
 
 const app = express();
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "..", "public")));
 
-app.get("/register", (_req, res) => {
-  res.sendFile(path.join(__dirname, "..", "public/pages", "register.html"));
-});
+const sendPage = (dir, page) => (_req, res) =>
+  res.sendFile(path.join(__dirname, "..", dir, `${page}.html`));
 
-app.get("/login", (_req, res) => {
-  res.sendFile(path.join(__dirname, "..", "public/pages", "login.html"));
-});
-
-app.get("/", (_req, res) => {
-  res.sendFile(path.join(__dirname, "..", "public/pages", "index.html"));
-});
-
-app.get("/contact", (_req, res) => {
-  res.sendFile(path.join(__dirname, "..", "public/pages", "contact.html"));
-});
-
-app.get("/menu", (_req, res) => {
-  res.sendFile(path.join(__dirname, "..", "public/pages", "menu.html"));
-});
-
-app.get("/cart", (_req, res) => {
-  res.sendFile(path.join(__dirname, "..", "public/pages", "cart.html"));
-});
-
-app.get("/checkout", verifyMember, (_req, res) => {
-  res.sendFile(path.join(__dirname, "..", "secure", "checkout.html"));
-});
-
-app.get("/admin", verifyAdmin, (_req, res) => {
-  res.sendFile(path.join(__dirname, "..", "secure", "admin.html"));
-});
+app.get("/register", sendPage("public/pages", "register"));
+app.get("/login", sendPage("public/pages", "login"));
+app.get("/", sendPage("public/pages", "index"));
+app.get("/contact", sendPage("public/pages", "contact"));
+app.get("/menu", sendPage("public/pages", "menu"));
+app.get("/cart", sendPage("public/pages", "cart"));
+app.get("/checkout", verifyMember, sendPage("secure", "checkout"));
+app.get("/admin", verifyAdmin, sendPage("secure", "admin"));
 
 const adminRoutes = require("./routes/admin");
 const chefRoutes = require("./routes/chef");
@@ -64,6 +43,7 @@ app.use("/api/driver", driverRoutes);
 app.use("/api/member", memberRoutes);
 app.use("/api/menu", menuRoutes);
 
-app.listen(8080, () => {
-  console.log("Server running on http://localhost:8080");
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
 });
